@@ -19,15 +19,20 @@ public abstract class Module {
 	 */
 	private int id;
 	/**
-	 * The mass of the module in kg.
+	 * The mass of the module when empty, or not in use. in kg.
 	 */
-	private double mass;
+	private final double standardMass;
+	/**
+	 * The mass of anything in the Module.  The standardMass is a constant, and the fillMass is variable.  Combined, they are 
+	 * the total mass of the Module.
+	 */
+	private double fillMass;
 	/**
 	 * This is the size of the module.  The minimum size is 1.  At the moment these are arbitrary units.
 	 * It might end up that a size of 2 takes up twice as much volume as a Module with size 1.  We'll see
 	 * how this ends up.
 	 */
-	private int size;
+	private final int size;
 	/**
 	 * This is if the Module is turned on or not.  Treat as 'functioning'. Reasons it might be de-activated 
 	 * would be: destroyed (damage == 100), and activated means works normally.  Maybe this could be used
@@ -47,7 +52,7 @@ public abstract class Module {
 	private boolean required;
 	/**
 	 * This represents the amount of power required to power this module.  Later, perhaps implement some kind of
-	 * Energy type.
+	 * Energy type. In J/s.
 	 */
 	private double powerusage;
 	
@@ -65,9 +70,44 @@ public abstract class Module {
 		this.size = size;
 		this.required = required;
 		//The id will be set once the module gets placed in a spaceship
-		mass = standardMass;
+		this.standardMass = standardMass;
 		adjacent = new ArrayList<Module>();
 		powerusage = power;
+		fillMass = 0;
+	}
+	/**
+	 * Default constructor which uses very basic values.  This would not make a functioning module.  The values should be 
+	 * reset in a child constructor.
+	 */
+	public Module()	{
+		
+		name = "Module";
+		size = 1;
+		required = false;
+		standardMass = 0;
+		adjacent = new ArrayList<Module>();
+		powerusage = 0;
+		fillMass = 0;
+	}
+	
+	public int getSize()	{
+		
+		return size;
+	}
+	
+	public void setFillMass(double fill)	{
+		
+		this.fillMass = fill;
+	}
+	
+	public double getFillMass()	{
+		
+		return fillMass;
+	}
+	
+	public double getMass()	{
+		
+		return fillMass + standardMass;
 	}
 	/**
 	 * Attaches this module to a spaceship, connected to a list of other modules.
@@ -90,14 +130,18 @@ public abstract class Module {
 	
 	public double getVolume()	{
 		
+		return getStaticVolume(size);
+	}
+	
+	public static double getStaticVolume(int size)	{
+		
 		double length = (size==1) ? 1.0 : 2.0*size;
 		return Math.pow(length, 3);
 	}
 	
 	public double getBaseMass()	{
 		
-		return mass;
+		return standardMass;
 	}
 	
-	public abstract double getMass();
 }

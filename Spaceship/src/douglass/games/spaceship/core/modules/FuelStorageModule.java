@@ -7,8 +7,13 @@ import douglass.games.spaceship.core.Propellant;
 
 public class FuelStorageModule extends InternalModule implements Flammable	{
 
-	public FuelStorageModule(String name, int size, double standardMass, double power, boolean required) {
-		super(name, size, standardMass, power, required);
+	public static final double WALL_THICKNESS = 0.003175; //in meters
+	public static final double WALL_DENSITY = 8000; // in kg/m^3
+	
+	public FuelStorageModule(int size, double power) {
+		
+		super("Fuel Tank", size, calculateStaticBaseMass(size), power, true);
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,6 +30,16 @@ public class FuelStorageModule extends InternalModule implements Flammable	{
 		
 		double capacity = fuel.getDensity()*getVolume();
 		return fuelpercent * capacity/100.0;
+	}
+	
+	private double calculateBaseMass()	{
+		
+		return calculateStaticBaseMass(getSize());
+	}
+	
+	private static double calculateStaticBaseMass(int size)	{
+		
+		return 6*Math.pow(getStaticVolume(size), 2.0/3)*WALL_THICKNESS*WALL_DENSITY;
 	}
 	
 	public double getMass()	{
