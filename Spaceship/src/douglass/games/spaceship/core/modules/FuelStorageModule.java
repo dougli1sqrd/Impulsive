@@ -8,28 +8,34 @@ import douglass.games.spaceship.core.Propellant;
 public class FuelStorageModule extends InternalModule implements Flammable	{
 
 	public static final double WALL_THICKNESS = 0.003175; //in meters
-	public static final double WALL_DENSITY = 8000; // in kg/m^3
-	
-	public FuelStorageModule(int size, double power) {
-		
-		super("Fuel Tank", size, calculateStaticBaseMass(size), power, true);
-		
-		// TODO Auto-generated constructor stub
-	}
+	public static final double WALL_DENSITY = 7000; // in kg/m^3
+
 
 	private Propellant fuel;
 	/**
-	 * This is the fraction of full the tank is.  This is 100 if 100% full, and 0 if totally empty.
+	 * This is the fraction of full the tank is.  This is 1 if 100% full, and 0 if totally empty.
 	 */
 	private double fuelpercent;
+	
+	public FuelStorageModule(Propellant propellant, int size, double power) {
+		
+		super("Fuel Tank", size, calculateStaticBaseMass(size), power, true);
+		fuel = propellant;
+	}
+	
 	/**
 	 * This gives the total amount of fuel left in the tank (in kg)
 	 * @return amount of fuel left in kg
 	 */
 	public double fuelAmount()	{
 		
-		double capacity = fuel.getDensity()*getVolume();
-		return fuelpercent * capacity/100.0;
+		double capacity = fuel.getStorageDensity()*getVolume();
+		return fuelpercent * capacity;
+	}
+	
+	public double getFilledPercent()	{
+		
+		return fuelpercent;
 	}
 	
 	private double calculateBaseMass()	{
@@ -47,25 +53,25 @@ public class FuelStorageModule extends InternalModule implements Flammable	{
 		return fuelAmount() + getBaseMass();
 	}
 	/**
-	 * This calculates the full capacity of this fuel storage module.
+	 * This calculates the full capacity of this fuel storage module. (kg)
 	 * @return
 	 */
 	private double fullCapacity()	{
 		
-		return fuel.getDensity() * getVolume();
+		return fuel.getStorageDensity() * getVolume();
 	}
 	
 	/**
 	 * This recalculates the current fuel level given a usage rate and a time that it has been consumed
 	 * @param rate rate at which the fuel is consumed, (kg/s)
 	 * @param deltat time interval for which the fuel was consumed, (s)
-	 * @return returns the amount of fuel actually used.
+	 * @return returns the amount of fuel actually used (kg).
 	 */
 	public double useFuel(double rate, double deltat)	{
 		
 		double fullcapacity = fullCapacity(); //mass
 		double used = rate * deltat;
-		double fractionused = used/fullcapacity*100;
+		double fractionused = used/fullcapacity;
 		if(fuelpercent - fractionused < 0.0)	{
 			
 			fractionused = fuelpercent;
@@ -83,9 +89,9 @@ public class FuelStorageModule extends InternalModule implements Flammable	{
 		
 		//first find the fractional change this makes.
 		double fraction = amount/fullCapacity();
-		if(fraction + fuelpercent > 100.0)	{
+		if(fraction + fuelpercent > 1.0)	{
 			
-			fuelpercent = 100.0;
+			fuelpercent = 1.0;
 		} else	{
 			
 			fuelpercent += fraction;
