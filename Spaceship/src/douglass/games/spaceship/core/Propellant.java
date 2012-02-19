@@ -59,7 +59,10 @@ public enum Propellant {
 		
 		return exhaustVelocity;
 	}
-	
+	/**
+	 * Reaction Density getter
+	 * @return The reaction density
+	 */
 	public double getDensity()	{
 		
 		return rxndensity;

@@ -23,6 +23,11 @@ public class FuelStorageModule extends InternalModule implements Flammable	{
 		fuel = propellant;
 	}
 	
+	public Propellant getFuelType()	{
+		
+		return fuel;
+	}
+	
 	/**
 	 * This gives the total amount of fuel left in the tank (in kg)
 	 * @return amount of fuel left in kg
@@ -48,6 +53,7 @@ public class FuelStorageModule extends InternalModule implements Flammable	{
 		return 6*Math.pow(getStaticVolume(size), 2.0/3)*WALL_THICKNESS*WALL_DENSITY;
 	}
 	
+	@Override
 	public double getMass()	{
 		
 		return fuelAmount() + getBaseMass();

@@ -128,6 +128,16 @@ public abstract class Module {
 		return true;
 	}
 	
+	/**
+	 * This method adds a Module as its neighbor.  This means they are "connected".  
+	 * @param neighbor An adjacent module.
+	 * @return true if addition is successful, false if not.
+	 */
+	public boolean addAdjacent(Module neighbor)	{
+		
+		return adjacent.add(neighbor);
+	}
+	
 	public double getVolume()	{
 		
 		return getStaticVolume(size);
