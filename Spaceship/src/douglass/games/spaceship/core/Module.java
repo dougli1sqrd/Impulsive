@@ -145,13 +145,33 @@ public abstract class Module {
 	
 	public static double getStaticVolume(int size)	{
 		
-		double length = (size==1) ? 1.0 : 2.0*size;
+		double length = (size <= 2) ? size : 2.0*size;
 		return Math.pow(length, 3);
 	}
 	
 	public double getBaseMass()	{
 		
 		return standardMass;
+	}
+	
+	public boolean isActivated()	{
+		
+		return activated;
+	}
+	
+	public void setActivated(boolean activated)	{
+		
+		this.activated = activated;
+	}
+	
+	public void setPowerUsage(double power)	{
+		
+		powerusage = power;
+	}
+	
+	public double getPowerUsage()	{
+		
+		return powerusage;
 	}
 	
 }

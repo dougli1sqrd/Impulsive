@@ -8,7 +8,7 @@ import douglass.games.spaceship.core.Propellant;
 public class FuelStorageModule extends InternalModule implements Flammable	{
 
 	public static final double WALL_THICKNESS = 0.003175; //in meters
-	public static final double WALL_DENSITY = 7000; // in kg/m^3
+	public static final double WALL_DENSITY = 6000; // in kg/m^3
 
 
 	private Propellant fuel;
@@ -19,7 +19,8 @@ public class FuelStorageModule extends InternalModule implements Flammable	{
 	
 	public FuelStorageModule(Propellant propellant, int size, double power) {
 		
-		super("Fuel Tank", size, calculateStaticBaseMass(size), power, true);
+		//A fuel module is for the most part automatic and does not require a crew.
+		super("Fuel Tank", size, calculateStaticBaseMass(size), power, 0, true);
 		fuel = propellant;
 	}
 	

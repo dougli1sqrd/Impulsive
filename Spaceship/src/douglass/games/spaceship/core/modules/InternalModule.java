@@ -2,20 +2,22 @@ package douglass.games.spaceship.core.modules;
 
 import douglass.games.spaceship.core.Module;
 
-public class InternalModule extends Module	{
+public abstract class InternalModule extends Module	{
 
+	/**
+	 * This is the number of crew required to run the internal module.  More than one person can run a Module at a time. 
+	 * Can be zero.
+	 */
+	private final int crew;
 	
-	
-	public InternalModule(String name, int size, double standardMass, double power, boolean required) {
+	public InternalModule(String name, int size, double standardMass, double power, int crew, boolean required) {
 		super(name, size, standardMass, power, required);
-
-	}
-
-	@Override
-	public double getMass() {
-		// TODO Auto-generated method stub
-		return 0;
+		this.crew = crew;
 	}
 	
+	public int getCrew()	{
+		
+		return crew;
+	}
 	
 }

@@ -22,4 +22,14 @@ public class ModuleException extends Exception {
 		
 		super(e);
 	}
+	
+	public ModuleException(String message)	{
+		
+		super(message);
+	}
+	
+	public Module getModuleCause()	{
+		
+		return cause;
+	}
 }
