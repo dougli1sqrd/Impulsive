@@ -3,6 +3,8 @@ package douglass.games.spaceship.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import celestial.physics.Vector;
+
 public abstract class Module {
 
 	/**
@@ -10,7 +12,7 @@ public abstract class Module {
 	 * modules through a series of connections.  A <--> B <--> C, so to get from A to C, you would 
 	 * have to traverse A -> B -> C
 	 */
-	private List<Module> adjacent;
+	private List<Module> adjacent; //TODO This should be changed to a system of North, South, East, West, Top, Bottom (a cube)
 	
 	private String name;
 	
@@ -55,6 +57,11 @@ public abstract class Module {
 	 * Energy type. In J/s.
 	 */
 	private double powerusage;
+	/**
+	 * This is the relative position in space that this module is to the center of mass of the ship.  This will be 
+	 * set by the spaceship when this module is added to it.
+	 */
+	private Vector relativeposition;
 	
 	/**
 	 * Basic constructor for a module.

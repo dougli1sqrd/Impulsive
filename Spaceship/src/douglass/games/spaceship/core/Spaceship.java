@@ -1,13 +1,12 @@
 package douglass.games.spaceship.core;
 
 import java.util.*;
-
 import celestial.physics.Constants;
 import celestial.physics.Vector;
 import celestial.physics.VectorMath;
 import celestial.simulator.Galaxy;
 import celestial.spaceObjects.Simulatable;
-import douglass.games.spaceship.core.modules.*;
+import douglass.games.spaceship.modules.*;
 
 public class Spaceship implements SignalReceiver, Simulatable	{
 
@@ -17,7 +16,7 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	
 	private CommunicationsModule communications;
 		
-	private EngineModule engine;
+	private List<EngineModule> engines;
 	
 	private Vector position;
 	
@@ -26,8 +25,15 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	private Vector pointing;
 	
 	private Vector angularvelocity;
-	
+		
 	private Galaxy galaxy;
+	
+	private int crew;
+	
+	public Spaceship(List<EngineModule> engines, CommandModule command, CommunicationsModule communications)	{
+		
+		
+	}
 		
 	public double getMass()	{
 		
@@ -47,30 +53,28 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	 * Adds the commmand module to the list of Modules, and it sets the command field to the given command module.
 	 * @param command
 	 */
-	public void addCommand(CommandModule command)	{
+	public void setCommand(CommandModule command)	{
 		
 		this.command = command;
 		components.add(command);
 	}
 	
 	/**
-	 * Adds the communications module to the list of Modules, and it sets the communications field to the given communications module.
+	 * sets the communications field to the given communications module. This assumes that the engine is already in the component list.
 	 * @param command
 	 */
-	public void addCommunications(CommunicationsModule communication)	{
+	public void setCommunications(CommunicationsModule communication)	{
 		
 		this.communications = communication;
-		components.add(communication);
 	}
 	
 	/**
-	 * Adds the engine module to the list of Modules, and it sets the engine field to the given engine module.
+	 * adds an engine in engines field.  This assumes that the engine is already in the component list.
 	 * @param command
 	 */
 	public void addEngine(EngineModule engine)	{
 		
-		this.engine = engine;
-		components.add(engine);
+		engines.add(engine);
 	}
 
 	@Override
@@ -101,6 +105,12 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	public Vector getPointing() {
 
 		return pointing;
+	}
+	
+	@Override
+	public void setPointing(Vector newpoint) {
+		
+		this.pointing = newpoint;
 	}
 
 	@Override
@@ -151,11 +161,17 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	 */
 	public void engageEngine(double deltat)	{
 		
-		double dp = engine.applyThrust(deltat);
+		double dp = 0.0;
+		for(EngineModule engine : engines)	{
+			
+			dp += engine.applyThrust(deltat);
+		}
 		//dp is a the magnitude of the momentum added from thrust of the enigine.
 		double speedchange = dp/getMass();
 		Vector addedVelocity = VectorMath.scaleMultiple(speedchange, pointing);
 		velocity = VectorMath.add(addedVelocity, velocity);
 	}
+
+
 
 }
