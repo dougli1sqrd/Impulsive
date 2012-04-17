@@ -1,18 +1,16 @@
 package douglass.games.spaceship.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.SynchronousQueue;
 
 import celestial.physics.Vector;
 
 public abstract class Module {
 
 	/**
-	 * The list of adjacent modules.  Modules that are adjacent are "connected".  You can only reach 
-	 * modules through a series of connections.  A <--> B <--> C, so to get from A to C, you would 
-	 * have to traverse A -> B -> C
+	 * This is a Mapping of the six directions of a cube to a Module that is connected to the side of the Direction.
 	 */
-	private List<Module> adjacent; //TODO This should be changed to a system of North, South, East, West, Top, Bottom (a cube)
+	private Map<Direction, Module> adjacent; 
 	
 	private String name;
 	
@@ -76,9 +74,8 @@ public abstract class Module {
 		this.name = name;
 		this.size = size;
 		this.required = required;
-		//The id will be set once the module gets placed in a spaceship
+		adjacent = new HashMap<Direction, Module>();
 		this.standardMass = standardMass;
-		adjacent = new ArrayList<Module>();
 		powerusage = power;
 		fillMass = 0;
 	}
@@ -92,7 +89,6 @@ public abstract class Module {
 		size = 1;
 		required = false;
 		standardMass = 0;
-		adjacent = new ArrayList<Module>();
 		powerusage = 0;
 		fillMass = 0;
 	}
@@ -116,35 +112,67 @@ public abstract class Module {
 		
 		return fillMass + standardMass;
 	}
+	
+	
 	/**
-	 * Attaches this module to a spaceship, connected to a list of other modules.
-	 * @param ship
-	 * @param connections
-	 * @return
+	 * This method adds a Module as its neighbor.  This means they are "connected".  Adds the neighbor module in the direction
+	 * specified by the direction parameter.
+	 * @param neighbor An adjacent module.
 	 */
-	public boolean attatch(Spaceship ship, List<Module> connections) throws ModuleException	{
+	public boolean addAdjacent(Module neighbor, Direction dir)	{
 		
-		if((connections == null) || (connections.size() == 0))	{
-			
-			throw new ModuleException(this);
-		}
-		
-		ship.addModule(this);
-		adjacent = connections;
-		
+		adjacent.put(dir, neighbor);
+		neighbor.addOppositeNeighbor(this, dir.opposite());
 		return true;
 	}
 	
-	/**
-	 * This method adds a Module as its neighbor.  This means they are "connected".  
-	 * @param neighbor An adjacent module.
-	 * @return true if addition is successful, false if not.
-	 */
-	public boolean addAdjacent(Module neighbor)	{
+	private void addOppositeNeighbor(Module neighbor, Direction opposite)	{
 		
-		return adjacent.add(neighbor);
+		adjacent.put(opposite, neighbor);
 	}
 	
+	/**
+	 * This is a graph search of all connected Modules, returning the list of modules that have a path to this module.
+	 * @return The list of Modules that have a path to this module.
+	 */
+	public List<Module> listModules()	{
+		
+		ArrayList<Module> mods = new ArrayList<Module>(); //this is also the list of visited nodes.
+		//search the graph.
+		Queue<Module> queue = new LinkedList<Module>();
+		queue.offer(this);
+		mods.add(this);
+		
+		while(!queue.isEmpty())	{
+			
+			Module m = queue.poll();
+			
+			//For each direction, get the mapped module and add it to the queue
+			for(Module a : m.getAdjacent())	{
+				
+				if(!mods.contains(a))	{
+					//For each attached Module, if it is not in the list of modules visited, then add it.
+					mods.add(a);
+					queue.offer(a); //add it to the queue, but we know we've visited it now, so it will never be added again
+				}
+			}
+		}
+		//At this point, all the Modules should have been visited. And the list of visited nodes is the complete list of
+		//connected nodes.  We will return this list.
+		return mods;
+	}
+	
+	public ArrayList<Module> getAdjacent() {
+		
+		ArrayList<Module> list = new ArrayList<Module>();
+		
+		for(Direction dir : adjacent.keySet())	{
+			
+			list.add(adjacent.get(dir));
+		}
+		
+		return list;
+	}
 	public double getVolume()	{
 		
 		return getStaticVolume(size);

@@ -2,6 +2,7 @@ package douglass.games.spaceship.modules;
 
 import java.util.List;
 
+import douglass.games.spaceship.core.Direction;
 import douglass.games.spaceship.core.Flammable;
 import douglass.games.spaceship.core.Module;
 import douglass.games.spaceship.core.Propellant;
@@ -51,7 +52,7 @@ public class EngineModule extends Module implements Flammable	{
 	 * If any of these conditions are not met, in addition to any other reason why adding would fail, then this method will 
 	 * return false and the fueltank will not be added.  It is probably safest to check.  Otherwise the spacehship could not run. 
 	 */
-	public boolean addAdjacent(Module fueltank)	{
+	public boolean addAdjacent(Module fueltank, Direction dir)	{
 		
 		if(!(fueltank instanceof FuelStorageModule))	{
 			
@@ -63,7 +64,8 @@ public class EngineModule extends Module implements Flammable	{
 			return false;
 		}
 		this.fueltank = realtank;
-		return super.addAdjacent(fueltank);
+		super.addAdjacent(fueltank, dir);
+		return true;
 	}
 	
 	/**

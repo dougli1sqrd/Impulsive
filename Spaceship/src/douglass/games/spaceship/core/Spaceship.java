@@ -1,6 +1,7 @@
 package douglass.games.spaceship.core;
 
 import java.util.*;
+
 import celestial.physics.Constants;
 import celestial.physics.Vector;
 import celestial.physics.VectorMath;
@@ -14,7 +15,7 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	
 	private CommandModule command;
 	
-	private CommunicationsModule communications;
+	private List<CommunicationsModule> communications;
 		
 	private List<EngineModule> engines;
 	
@@ -30,10 +31,35 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	
 	private int crew;
 	
-	public Spaceship(List<EngineModule> engines, CommandModule command, CommunicationsModule communications)	{
+	//private boolean online;
+	
+	/**
+	 * This constructs a very basic Spaceship.  Other pieces will have to be instanciated in order for it to be functional.
+	 *
+	 */
+	public Spaceship(CommandModule cmd)	{
 		
+		//first we'll add each of the modules supplied into the components list.
+		components = cmd.listModules();
+		command = cmd;
 		
+		//Find the engine modules, communication modules
+		for(Module m : components)	{
+			
+			if(m instanceof EngineModule)	{
+				
+				engines.add((EngineModule) m);
+			}
+			if(m instanceof CommunicationsModule)	{
+				
+				communications.add((CommunicationsModule) m); //TODO how do I do this w/out using instanceof?
+			}
+		}
+		
+		//We know the center of mass is where r is pointing.  We just have to figure out where the center of mass is 
+		//in relation to each particular module.  
 	}
+	
 		
 	public double getMass()	{
 		
@@ -45,7 +71,12 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 		return mass;
 	}
 	
-	public void addModule(Module module) {
+	public void connectModule(Module module, List<Module> connectionlist)	{
+		
+		addModule(module); //TODO make this add connections to the module, 
+	}
+	
+	private void addModule(Module module) {
 		
 		components.add(module);
 	}
@@ -61,16 +92,14 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	
 	/**
 	 * sets the communications field to the given communications module. This assumes that the engine is already in the component list.
-	 * @param command
 	 */
-	public void setCommunications(CommunicationsModule communication)	{
+	public void addCommunications(CommunicationsModule communication)	{
 		
-		this.communications = communication;
+		communications.add(communication);
 	}
 	
 	/**
 	 * adds an engine in engines field.  This assumes that the engine is already in the component list.
-	 * @param command
 	 */
 	public void addEngine(EngineModule engine)	{
 		
@@ -106,8 +135,7 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 
 		return pointing;
 	}
-	
-	@Override
+
 	public void setPointing(Vector newpoint) {
 		
 		this.pointing = newpoint;
@@ -136,7 +164,9 @@ public class Spaceship implements SignalReceiver, Simulatable	{
 	@Override
 	public void receiveSignal(Signal signal) {
 		
-		communications.receiveSignal(signal);
+		for(CommunicationsModule cm : communications) {
+			cm.receiveSignal(signal);
+		}
 	}
 	
 	public void sendSignal(Signal signal)	{

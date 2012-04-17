@@ -2,6 +2,7 @@ package douglass.games.spaceship.modules.test;
 
 import org.junit.*;
 import static org.junit.Assert.*;
+import douglass.games.spaceship.core.Direction;
 import douglass.games.spaceship.core.ModuleException;
 import douglass.games.spaceship.core.Propellant;
 import douglass.games.spaceship.modules.EngineModule;
@@ -20,7 +21,7 @@ public class EngineModuleTest {
 		engine = new EngineModule(2, 2000, 300, Propellant.HYDROGEN, .002);
 		tank = new FuelStorageModule(engine.getFuelType(), 3, 300);
 		tank.addFuel(1000);
-		boolean connected = engine.addAdjacent(tank);
+		boolean connected = engine.addAdjacent(tank, Direction.NORTH);
 		engine.setThrottle(1.0);
 		
 		if(!connected)	{
