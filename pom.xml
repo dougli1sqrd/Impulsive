@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.douglass.impulsive</groupId>
+    <artifactId>Impulsive</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Impulsive</name>
+    <version>1.0</version>
+
+    <description>
+       A space simulator
+    </description>
+    <url>https://github.com/dougli1sqrd/Impulsive.git</url>
+    <inceptionYear>2011</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>dougli1sqrd</id>
+            <name>Eric Douglass</name>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>Spaceship</module>
+        <module>Celestial</module>
+    </modules>
+
+</project>
