@@ -13,4 +13,12 @@
     <artifactId>Spaceship</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.douglass.impulsive.celestial</groupId>
+            <artifactId>Celestial</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>
