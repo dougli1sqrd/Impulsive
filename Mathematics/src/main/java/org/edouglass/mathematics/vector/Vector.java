@@ -5,27 +5,22 @@ package org.edouglass.mathematics.vector;
  * User: dougli1sqrd
  * Date: 3/22/13
  * Time: 12:55 AM
- * To change this template use File | Settings | File Templates.
  */
 public class Vector	{
 
     private double[] components;
 
     /**
-     * Specifies N number of components in a vector
-     * @param components
+     * Creates a vector with N number of components
      */
     public Vector(double...components)	{
 
         this.components = new double[components.length];
-        for(int i=0; i<components.length; i++)	{
-
-            this.components[i] = components[i];
-        }
+        System.arraycopy(components, 0, this.components, 0, components.length);
     }
     /**
-     * creates a 0 vector with the specified length
-     * @param length
+     * Creates a 0 vector with the specified length
+     * @param length The number of components this vector should have
      */
     public Vector(int length)	{
 
@@ -81,19 +76,9 @@ public class Vector	{
         return scale(1/length);
     }
 
-    @Override
-    public Vector clone()	{
-
-        Vector res = new Vector(components.length);
-        for(int i=0; i<components.length; i++)	{
-
-            res.setComponent(i, components[i]);
-        }
-        return res;
-    }
     /**
      * Converts the vector into an array of numbers
-     * @return
+     * @return returns an array of doubles that are the compenents of this vector in order
      */
     public double[] toArray()	{
 
