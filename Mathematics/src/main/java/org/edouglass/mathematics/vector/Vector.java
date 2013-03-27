@@ -58,10 +58,20 @@ public class Vector	{
         return Math.sqrt(total);
     }
 
+    /**
+     * Scale this vector by the scaling factor.  This multiplies each component
+     * of the vector by the factor; consequently scaling the length of the vector
+     * as well.
+     *
+     * @param factor this amount to scale the vector by
+     * @return a new vector whose components are <code>factor</code> times
+     * larger than than this vector and whose length is also <code>factor</code>
+     * times larger.
+     */
     public Vector scale(double factor)  {
         double[] components = new double[this.components.length];
         for(int i=0; i<this.components.length; i++)  {
-            components[i] = factor*components[i];
+            components[i] = factor*this.components[i];
         }
         return new Vector(components);
     }
@@ -77,6 +87,47 @@ public class Vector	{
     }
 
     /**
+     * Make a new vector with the vector sum of this vector and <code>v</code>
+     * If the vector supplied is of a different size than this vector, then
+     * the larger of the two will just fill in zeroes for the entries that
+     * do not correspond to the other. For example, [1, 2, 3] summed with
+     * [1, 1] is equivalent to [1, 2, 3] + [1, 1, 0]
+     * @param v The vector to add to this vector
+     */
+    public Vector add(Vector v) {
+
+        double[] addedComponents = new double[components.length];
+        for(int i=0; i<components.length; i++)  {
+            if(i < v.entries()) {
+                addedComponents[i] = components[i] + v.getComponent(i);
+            } else  {
+                addedComponents[i] = components[i];
+            }
+        }
+        return new Vector(addedComponents);
+    }
+    /**
+     * Make a new vector with the vector subtraction of this vector and <code>v</code>.
+     * (defined as <code>A - B = A + (-1)*B</code>)
+     * If the vector supplied is of a different size than this vector, then
+     * the larger of the two will just fill in zeroes for the entries that
+     * do not correspond to the other. For example, [1, 2, 3] subtracted with
+     * [1, 1] is equivalent to [1, 2, 3] - [1, 1, 0]
+     * @param v The vector to add to this vector
+     */
+    public Vector subtract(Vector v) {
+        double[] addedComponents = new double[components.length];
+        for(int i=0; i<components.length; i++)  {
+            if(i < v.entries()) {
+                addedComponents[i] = components[i] - v.getComponent(i);
+            } else  {
+                addedComponents[i] = components[i];
+            }
+        }
+        return new Vector(addedComponents);
+    }
+
+    /**
      * Converts the vector into an array of numbers
      * @return returns an array of doubles that are the compenents of this vector in order
      */
@@ -84,6 +135,7 @@ public class Vector	{
 
         return components;
     }
+
     @Override
     public String toString()	{
 
@@ -95,6 +147,4 @@ public class Vector	{
         vec += components[components.length-1]+">";
         return vec;
     }
-
 }
-
