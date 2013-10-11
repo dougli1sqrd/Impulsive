@@ -5,6 +5,8 @@ package org.edouglass.mathematics.vector;
  * User: dougli1sqrd
  * Date: 3/22/13
  * Time: 1:29 AM
+ * A convenient way of representing vectors in 3-space.  X is the first entry, Y is the second entry, Z is the third
+ * entry.
  */
 public class Vector3D extends Vector    {
 

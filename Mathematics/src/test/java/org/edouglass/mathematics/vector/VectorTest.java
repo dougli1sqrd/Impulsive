@@ -86,4 +86,20 @@ public class VectorTest {
         assertEquals(1.0, subtracted2.getComponent(1), 1.0*relativeDelta);
         assertEquals(1.0, subtracted2.getComponent(2), 1.0*relativeDelta);
     }
+
+    @Test
+    public void sameEntriesVectorsAreEqualTest()    {
+        Vector v1 = new Vector(1.0, 2.0, 3.0);
+        Vector v2 = new Vector(1.0, 2.0, 3.0);
+        assertTrue(v1.equals(v2));
+        assertTrue(v2.equals(v1));
+    }
+
+    @Test
+    public void differentSizedVectorsUnequalTest()  {
+        Vector v1 = new Vector(1.0, 2.0);
+        Vector v2 = new Vector(1.0, 2.0, 3.0);
+        assertFalse(v1.equals(v2));
+        assertFalse(v2.equals(v1));
+    }
 }

@@ -10,6 +10,8 @@ public class Vector	{
 
     private double[] components;
 
+    private static final double relativeEqualityTolerance = 1E-9;
+
     /**
      * Creates a vector with N number of components
      */
@@ -146,5 +148,22 @@ public class Vector	{
         }
         vec += components[components.length-1]+">";
         return vec;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Vector)   {
+            Vector objv = (Vector)obj;
+            if(objv.entries() != entries()) {
+                return false;
+            }
+            for(int i=0; i<objv.entries(); i++)  {
+                if(Math.abs(objv.getComponent(i)-getComponent(i)) > relativeEqualityTolerance*getComponent(i))  {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

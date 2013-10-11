@@ -29,6 +29,7 @@
     <modules>
         <module>Spaceship</module>
         <module>Celestial</module>
+        <module>Mathematics</module>
     </modules>
 
 </project>
