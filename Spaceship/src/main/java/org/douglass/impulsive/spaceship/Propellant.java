@@ -1,4 +1,4 @@
-package org.douglass.impulsive.spaceship.core;
+package org.douglass.impulsive.spaceship;
 
 public enum Propellant {
 

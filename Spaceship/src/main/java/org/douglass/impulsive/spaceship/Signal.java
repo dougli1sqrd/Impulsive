@@ -1,4 +1,4 @@
-package org.douglass.impulsive.spaceship.core;
+package org.douglass.impulsive.spaceship;
 
 import org.douglass.impulsive.celestial.physics.Vector;
 import org.douglass.impulsive.celestial.physics.VectorMath;
