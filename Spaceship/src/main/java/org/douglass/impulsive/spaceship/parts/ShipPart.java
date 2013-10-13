@@ -21,4 +21,8 @@ public interface ShipPart {
     void disconnect();
 
     void disconnectFrom(ShipPart p);
+
+    List<ShipPart> listConnectedParts();
+
+    boolean isConnected(ShipPart p);
 }
