@@ -1,46 +1,61 @@
 package org.douglass.impulsive.spaceship.parts;
 
+import org.douglass.impulsive.spaceship.damage.Damage;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: dougli1sqrd
- * Date: 10/12/13
- * Time: 1:04 AM
+ * Date: 10/25/13
+ * Time: 10:44 AM
  */
-public class HullPart implements ShipPart {
+public class BasicShipPart implements ShipPart{
 
-    private int structuralIntegrity;
+    private Material material;
 
     private List<ShipPart> connectedParts;
 
-    private int id;
+    private int currentStructuralIntegrity;
 
-    public static final int FUNCTIONAL_THRESHOLD = 6;
+    private int maxStructuralIntegrity;
+
+    private int functionalThreshold;
+
+    private int id;
 
     private static int nextId = 1;
 
-    public HullPart()   {
-        structuralIntegrity = 20;
+    public BasicShipPart(Material material, int structuralIntegrity, int functionalThreshold)  {
+        this.material = material;
         connectedParts = new ArrayList<ShipPart>();
+        currentStructuralIntegrity = structuralIntegrity;
+        maxStructuralIntegrity = structuralIntegrity;
+        this.functionalThreshold = functionalThreshold;
         id = nextId;
         nextId++;
     }
 
     @Override
     public boolean isFunctional() {
-        return structuralIntegrity >= FUNCTIONAL_THRESHOLD;
+        return currentStructuralIntegrity > functionalThreshold;
     }
 
     @Override
     public void repair() {
-        structuralIntegrity++;
+        if(currentStructuralIntegrity < maxStructuralIntegrity) {
+            currentStructuralIntegrity++;
+        }
     }
 
     @Override
-    public void damage() {
-        structuralIntegrity--;
+    public void damage(Damage damage) {
+        int structuralDamage = material.resolveDamage(damage);
+        currentStructuralIntegrity -= structuralDamage;
+        if(currentStructuralIntegrity <= 0)  {
+            disconnect();
+        }
     }
 
     @Override
@@ -49,6 +64,13 @@ public class HullPart implements ShipPart {
             if(!connectedParts.contains(part))  {
                 connectIndividualPart(part);
             }
+        }
+    }
+
+    @Override
+    public void connectTo(ShipPart toConnect) {
+        if(!connectedParts.contains(toConnect)) {
+            connectIndividualPart(toConnect);
         }
     }
 
@@ -79,32 +101,17 @@ public class HullPart implements ShipPart {
         return connectedParts.contains(p);
     }
 
-    public void setStructuralIntegrity(int integrity)   {
-        this.structuralIntegrity = integrity;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = structuralIntegrity;
-        result = 31 * result + (connectedParts != null ? connectedParts.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        HullPart hullPart = (HullPart) o;
-
-        if (structuralIntegrity != hullPart.structuralIntegrity) return false;
-        return !(connectedParts != null ? !connectedParts.equals(hullPart.connectedParts) : hullPart.connectedParts != null);
-
-    }
-
     @Override
     public String toString() {
         return "Hull Part #"+id;
+    }
+
+    protected void setStructuralIntegrity(int integrity)   {
+        currentStructuralIntegrity = integrity;
+    }
+
+    protected int getStructuralIntegrity()  {
+        return currentStructuralIntegrity;
     }
 
     private void connectIndividualPart(ShipPart part) {

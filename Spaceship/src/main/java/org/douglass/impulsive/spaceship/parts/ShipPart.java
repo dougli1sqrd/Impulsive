@@ -1,5 +1,7 @@
 package org.douglass.impulsive.spaceship.parts;
 
+import org.douglass.impulsive.spaceship.damage.Damage;
+
 import java.util.List;
 
 /**
@@ -14,9 +16,11 @@ public interface ShipPart {
 
     void repair();
 
-    void damage();
+    void damage(Damage damage);
 
     void connectTo(List<ShipPart> toConnect);
+
+    void connectTo(ShipPart toConnect);
 
     void disconnect();
 
