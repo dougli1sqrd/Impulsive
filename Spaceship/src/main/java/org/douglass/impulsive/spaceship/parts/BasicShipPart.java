@@ -106,10 +106,16 @@ public class BasicShipPart implements ShipPart{
         return "Hull Part #"+id;
     }
 
+    /**
+     * This is only to be used for testing.
+     */
     protected void setStructuralIntegrity(int integrity)   {
         currentStructuralIntegrity = integrity;
     }
 
+    /**
+     * This is only to be used for testing
+     */
     protected int getStructuralIntegrity()  {
         return currentStructuralIntegrity;
     }
