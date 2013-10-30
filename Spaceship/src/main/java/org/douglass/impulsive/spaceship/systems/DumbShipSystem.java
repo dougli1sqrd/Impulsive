@@ -2,6 +2,7 @@ package org.douglass.impulsive.spaceship.systems;
 
 import org.douglass.impulsive.spaceship.parts.ShipPart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,11 +11,17 @@ import java.util.List;
  * Date: 10/27/13
  * Time: 1:55 PM
  */
-public class System {
+public class DumbShipSystem implements ShipSystem {
 
     private List<ShipPart>  systemParts;
 
-    private boolean isFunctional()  {
+    public DumbShipSystem(List<ShipPart> systemParts)   {
+        this.systemParts = new ArrayList<ShipPart>();
+        this.systemParts.addAll(systemParts);
+    }
+
+    @Override
+    public boolean isFunctional()  {
         for(ShipPart part : systemParts)    {
             if(!part.isFunctional())    {
                 return false;
@@ -22,4 +29,6 @@ public class System {
         }
         return true;
     }
+
+
 }
