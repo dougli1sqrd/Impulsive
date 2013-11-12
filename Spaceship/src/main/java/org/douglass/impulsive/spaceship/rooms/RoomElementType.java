@@ -7,6 +7,17 @@ package org.douglass.impulsive.spaceship.rooms;
  * Time: 3:03 PM
  */
 public enum RoomElementType {
-    FLOOR,
-    WALL;
+
+    FLOOR('+'),
+    WALL('#');
+
+    private char typeChar;
+
+    private RoomElementType(char typeChar)    {
+        this.typeChar = typeChar;
+    }
+
+    public char typeChar()  {
+        return typeChar;
+    }
 }

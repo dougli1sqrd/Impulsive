@@ -19,25 +19,16 @@ public enum Direction {
 
     private Direction opposite;
 
+    static {
+        NORTH.opposite = SOUTH;
+        SOUTH.opposite = NORTH;
+        EAST.opposite = WEST;
+        WEST.opposite = EAST;
+    }
+
     private Direction(int deltaColumn, int deltaRow)   {
         this.deltaColumn = deltaColumn;
         this.deltaRow = deltaRow;
-        switch (this)   {
-            case NORTH: {
-                opposite = SOUTH;
-                break;
-            }
-            case SOUTH: {
-                opposite = NORTH;
-                break;
-            }
-            case EAST: {
-                opposite = WEST;
-            }
-            case WEST: {
-                opposite = EAST;
-            }
-        }
     }
 
     public int getDeltaColumn()   {

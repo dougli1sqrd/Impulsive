@@ -64,4 +64,16 @@ public class RectangularRoom {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        String room = "";
+        for(int i=0; i<rows; i++)    {
+            for(int j=0; j<columns; j++)    {
+                room += roomGrid[j][i].getType().typeChar();
+            }
+            room += '\n';
+        }
+        return room;
+    }
 }
