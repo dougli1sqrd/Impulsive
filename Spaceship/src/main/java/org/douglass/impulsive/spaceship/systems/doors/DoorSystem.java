@@ -1,5 +1,6 @@
 package org.douglass.impulsive.spaceship.systems.doors;
 
+import org.douglass.impulsive.dimensions.Power;
 import org.douglass.impulsive.spaceship.parts.Door;
 import org.douglass.impulsive.spaceship.parts.PowerConduit;
 import org.douglass.impulsive.spaceship.parts.ShipPart;
@@ -37,6 +38,31 @@ public class DoorSystem implements ShipSystem{
     @Override
     public boolean isFunctional() {
         return door.isFunctional() && powerIn.isFunctional() && signal.isFunctional();
+    }
+
+    @Override
+    public boolean isPowered() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Power getRequiredPower() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Power getCurrentInputPower() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void powerUp() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void powerOff() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public SignalConduit getSignal()    {

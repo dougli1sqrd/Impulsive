@@ -1,5 +1,7 @@
 package org.douglass.impulsive.spaceship.systems;
 
+import org.douglass.impulsive.dimensions.Power;
+
 /**
  * Created with IntelliJ IDEA.
  * User: dougli1sqrd
@@ -10,4 +12,13 @@ public interface ShipSystem {
 
     boolean isFunctional();
 
+    boolean isPowered();
+
+    Power getRequiredPower();
+
+    Power getCurrentInputPower();
+
+    void powerUp();
+
+    void powerOff();
 }
