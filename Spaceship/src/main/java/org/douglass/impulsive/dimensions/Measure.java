@@ -16,5 +16,11 @@ public interface Measure {
 
     Measure multiply(double coefficient);
 
+    boolean isGreaterThan(Measure m);
+
+    boolean isLessThan(Measure m);
+
     String toString();
+
+    boolean equals(Object o);
 }

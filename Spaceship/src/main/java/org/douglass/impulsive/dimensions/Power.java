@@ -12,6 +12,8 @@ public class Power implements Measure {
 
     private double amount;
 
+    public static final Power ZERO_POWER = new Power(0, "W");
+
     public Power(double amount, String units)    {
         this.amount = amount;
         this.units = new StringDimension(units);
@@ -38,5 +40,24 @@ public class Power implements Measure {
     @Override
     public Power multiply(double coefficient) {
         return new Power(coefficient*amount, units.print());
+    }
+
+    @Override
+    public boolean isGreaterThan(Measure m) {
+        return amount > m.getAmount();
+    }
+
+    @Override
+    public boolean isLessThan(Measure m) {
+        return amount < m.getAmount();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Power)) {
+            return false;
+        }
+        Power p = (Power) obj;
+        return p.getAmount() == amount && p.getDimension().equals(units);
     }
 }

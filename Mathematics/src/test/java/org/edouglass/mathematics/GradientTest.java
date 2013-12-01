@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
  */
 public class GradientTest {
 
-    @Test
     public void simpleSlopeGradientTest()   {
         Gradient grad = new Gradient(new SimpleSlopeField());
         Vector actual = grad.gradientAt(new Vector(1, 2, 3));

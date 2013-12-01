@@ -1,5 +1,6 @@
 package org.douglass.impulsive.spaceship.systems;
 
+import org.douglass.impulsive.dimensions.Power;
 import org.douglass.impulsive.spaceship.parts.ShipPart;
 
 import java.util.ArrayList;
@@ -28,6 +29,31 @@ public class DumbShipSystem implements ShipSystem {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean isPowered() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Power getRequiredPower() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Power getCurrentInputPower() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void powerUp() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void powerOff() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
