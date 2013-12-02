@@ -60,4 +60,9 @@ public class Power implements Measure {
         Power p = (Power) obj;
         return p.getAmount() == amount && p.getDimension().equals(units);
     }
+
+    @Override
+    public String toString() {
+        return amount+" "+units;
+    }
 }

@@ -37,4 +37,9 @@ public class StringDimension implements Dimension{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return unitRepresentation;
+    }
 }

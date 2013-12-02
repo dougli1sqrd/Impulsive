@@ -24,8 +24,9 @@ public class PowerSource implements ShipSystem {
 
     private Power currentPowerOutput;
 
-    public PowerSource(Power powerRating) {
-        systemParts = new ArrayList<ShipPart>();
+    public PowerSource(Power powerRating, List<ShipPart> systemParts) {
+        this.systemParts = new ArrayList<ShipPart>();
+        this.systemParts.addAll(systemParts);
         powerDraws = new HashMap<ShipSystem, Power>();
         this.powerRating = powerRating;
         currentPowerOutput = Power.ZERO_POWER;
@@ -113,5 +114,9 @@ public class PowerSource implements ShipSystem {
            replenishPower(draw);
            draw.powerOff();
        }
+    }
+
+    public Power getCurrentPowerOutput()    {
+        return currentPowerOutput;
     }
 }
