@@ -120,4 +120,11 @@ public class PowerSourceTest {
         assertEquals(Power.ZERO_POWER, system.getCurrentInputPower());
         assertEquals(Power.ZERO_POWER, system2.getCurrentInputPower());
     }
+
+    @Test
+    public void getCurrentPowerOutputTest() {
+        assertEquals(Power.ZERO_POWER, powerSource.getCurrentPowerOutput());
+        powerSource.powerUp();
+        assertEquals(new Power(POWER_RATING, "W"), powerSource.getCurrentPowerOutput());
+    }
 }
