@@ -110,10 +110,13 @@ public class PowerSource implements ShipSystem {
      * Systems.
      */
     public void killPowerDrains()  {
-       for(ShipSystem draw : powerDraws.keySet())   {
-           replenishPower(draw);
-           draw.powerOff();
-       }
+
+        List<ShipSystem> draws = new ArrayList<ShipSystem>();
+        draws.addAll(powerDraws.keySet());
+        for(ShipSystem draw : draws)   {
+            replenishPower(draw);
+            draw.powerOff();
+        }
     }
 
     public Power getCurrentPowerOutput()    {

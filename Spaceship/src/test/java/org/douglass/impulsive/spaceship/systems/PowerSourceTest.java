@@ -106,4 +106,18 @@ public class PowerSourceTest {
         powerSource.replenishPower(otherSystem);
         assertEquals(new Power(POWER_RATING-200, "W"), powerSource.getCurrentPowerOutput());
     }
+
+    @Test
+    public void killPowerDrainsTest()   {
+        powerSource.powerUp();
+        TestSystem system2 = new TestSystem(powerSource, new Power(500, "W"));
+        powerSource.drawPower(system, new Power(500, "W"));
+        powerSource.drawPower(system2, new Power(500, "W"));
+
+        powerSource.killPowerDrains();
+
+        assertEquals(new Power(POWER_RATING, "W"), powerSource.getCurrentPowerOutput());
+        assertEquals(Power.ZERO_POWER, system.getCurrentInputPower());
+        assertEquals(Power.ZERO_POWER, system2.getCurrentInputPower());
+    }
 }
